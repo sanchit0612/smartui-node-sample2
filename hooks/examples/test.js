@@ -10,9 +10,7 @@ const USERNAME = process.env.LT_USERNAME || "username";
 const KEY = process.env.LT_ACCESS_KEY || "accessKey";
 
 // gridUrl: gridUrl can be found at automation dashboard
-//const GRID_HOST = process.env.GRID_HOST || "@hub.sushobhit.dev.lambdatest.io/wd/hub";    //dev
-const GRID_HOST =
-process.env.GRID_HOST || "@hub.lambdatest.com/wd/hub";    //connect to lambdatest hub
+const GRID_HOST = process.env.GRID_HOST || "@hub.lambdatest.com/wd/hub";    //connect to lambdatest hub
 
 async function searchTextOnGoogle() {
   var keys = process.argv;
@@ -34,32 +32,34 @@ async function searchTextOnGoogle() {
     "accessKey": KEY,
     name: "test session", // name of the test
     build: platform + browserName + version, // name of the build
-    "smartUI.project": "smartuigithub",
-    // will generate random smartUI build if not specified
-    // "smartUI.build": "first", 
-    "smartUI.options": {
-      "output": {
-        "errorColor": {
-          "red": 200,
-          "green": 0,
-          "blue": 255
+    "LT:Options": {
+      "smartUI.project": "smartuigithub",
+      // will generate random smartUI build if not specified
+      // "smartUI.build": "first", 
+      "smartUI.options": {
+        "output": {
+          "errorColor": {
+            "red": 200,
+            "green": 0,
+            "blue": 255
+          },
+          "errorType": "movement",
+          "transparency": 0.3,
+          "largeImageThreshold": 100,
+          "useCrossOrigin": false,
+          "outputDiff": true
         },
-        "errorType": "movement",
-        "transparency": 0.3,
-        "largeImageThreshold": 100,
-        "useCrossOrigin": false,
-        "outputDiff": true
-      },
-      "scaleToSameSize": true,
-      "ignore": "antialiasing"
+        "scaleToSameSize": true,
+        "ignore": "antialiasing"
+      }
     }
   };
 
   //add github app capabilities
   let githubURL = process.env.GITHUB_URL
-  if (githubURL){
+  if (githubURL) {
     capabilities.github = {
-      url:githubURL
+      url: githubURL
     }
   }
 
@@ -104,7 +104,10 @@ async function startTest(gridUrl, capabilities, name) {
       // For Smartui TakeScreenshot
       setTimeout(function () {
         console.log("taking screenshot ...")
-        driver.executeScript(`smartui.takeScreenshot,{"screenshotName":"web-page"}`).then(out => {
+        let config = {
+          screenshotName: "web-page"
+        };
+        driver.executeScript("smartui.takeScreenshot", config).then(out => {
           console.log("RESPONSE :", out)
           return
         });
