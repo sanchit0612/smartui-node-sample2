@@ -33,7 +33,7 @@ let capabilities = {
   driver.manage().window().fullscreen();
   try {
     await driver.get("https://www.lambdatest.com/visual-regression-testing");
-    await smartuiSnapshot(driver, "LT-SmartUI");
+    await smartuiSnapshot(driver, "LT-SmartUI"); // Capture Screenshot
   } finally {
     await driver.quit();
   }
