@@ -23,38 +23,36 @@ async function searchTextOnGoogle() {
 
   // Setup Input capabilities
   let capabilities = {
-    platform: platform,
-    browserName: browserName,
-    version: version,
-    queueTimeout: 300,
-    visual: true,
-    "user": USERNAME,
-    "accessKey": KEY,
-    name: "test session", // name of the test
-    build: platform + browserName + version, // name of the build
-    "LT:Options": {
-      "smartUI.project": "smartuigithub",
-      // will generate random smartUI build if not specified
-      // "smartUI.build": "first", 
-      "smartUI.options": {
-        "output": {
-          "errorColor": {
-            "red": 200,
-            "green": 0,
-            "blue": 255
-          },
-          "errorType": "movement",
-          "transparency": 0.3,
-          "largeImageThreshold": 100,
-          "useCrossOrigin": false,
-          "outputDiff": true
+  platform: platform,
+  buildName: "Build-" + moment().startOf('minute').subtract(moment().minute() % 5, 'minutes').format("YYYY-MM-DD-HH-mm"),
+  browserName: browserName,
+  version: version,
+  queueTimeout: 300,
+  visual: true,
+  user: USERNAME,
+  accessKey: KEY,
+  name: "test session",
+  build: platform + browserName + version,
+  "LT:Options": {
+    "smartUI.project": "smartuigithub",
+    "smartUI.options": {
+      "output": {
+        "errorColor": {
+          "red": 200,
+          "green": 0,
+          "blue": 255
         },
-        "scaleToSameSize": true,
-        "ignore": "antialiasing"
-      }
+        "errorType": "movement",
+        "transparency": 0.3,
+        "largeImageThreshold": 100,
+        "useCrossOrigin": false,
+        "outputDiff": true
+      },
+      "scaleToSameSize": true,
+      "ignore": "antialiasing"
     }
-  };
-
+  }
+};
   //add github app capabilities
   let githubURL = process.env.GITHUB_URL
   if (githubURL) {
