@@ -24,7 +24,6 @@ async function searchTextOnGoogle() {
   // Setup Input capabilities
   let capabilities = {
   platform: platform,
-  buildName: "Build-" + moment().startOf('minute').subtract(moment().minute() % 5, 'minutes').format("YYYY-MM-DD-HH-mm"),
   browserName: browserName,
   version: version,
   queueTimeout: 300,
