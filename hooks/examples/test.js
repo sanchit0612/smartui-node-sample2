@@ -24,7 +24,7 @@ async function searchTextOnGoogle() {
   // Setup Input capabilities
   let capabilities = {
   platform: platform,
-  buildName: "Build-" + moment().startOf('minute').subtract(moment().minute() % 5, 'minutes').format("YYYY-MM-DD-HH-mm"),
+  build: "Build-" + moment().startOf('minute').subtract(moment().minute() % 5, 'minutes').format("YYYY-MM-DD-HH-mm"),
 
   browserName: browserName,
   version: version,
@@ -33,7 +33,6 @@ async function searchTextOnGoogle() {
   user: USERNAME,
   accessKey: KEY,
   name: "test session",
-  build: platform + browserName + version,
   "LT:Options": {
     "smartUI.project": "smartuigithub",
     "smartUI.options": {
