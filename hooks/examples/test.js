@@ -34,7 +34,6 @@ async function searchTextOnGoogle() {
   // Setup Input capabilities
   let capabilities = {
   platform: platform,
-  build: generateDynamicBuildName(),
 
   browserName: browserName,
   version: version,
@@ -44,6 +43,7 @@ async function searchTextOnGoogle() {
   accessKey: KEY,
   name: "test session",
   "LT:Options": {
+   "build": generateDynamicBuildName(),
     "smartUI.project": "smartuigithub",
     "smartUI.options": {
       "output": {
