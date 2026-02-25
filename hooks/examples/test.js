@@ -12,6 +12,16 @@ const KEY = process.env.LT_ACCESS_KEY || "accessKey";
 // gridUrl: gridUrl can be found at automation dashboard
 const GRID_HOST = process.env.GRID_HOST || "@hub.lambdatest.com/wd/hub";    //connect to lambdatest hub
 
+function generateDynamicBuildName() {
+  const now = moment();
+  const minutes = now.minutes();
+  const roundedMinutes = Math.floor(minutes / 5) * 5;
+  const timestamp = now.clone().minutes(roundedMinutes).seconds(0).milliseconds(0).format("YYYY-MM-DD_HH-mm");
+
+  return `Build_${timestamp}`;
+}
+
+
 async function searchTextOnGoogle() {
   var keys = process.argv;
   console.log(keys);
@@ -24,7 +34,6 @@ async function searchTextOnGoogle() {
   // Setup Input capabilities
   let capabilities = {
   platform: platform,
-  build: "Build-" + moment().startOf('minute').subtract(moment().minute() % 5, 'minutes').format("YYYY-MM-DD-HH-mm"),
 
   browserName: browserName,
   version: version,
@@ -34,6 +43,7 @@ async function searchTextOnGoogle() {
   accessKey: KEY,
   name: "test session",
   "LT:Options": {
+   "build": generateDynamicBuildName(),
     "smartUI.project": "smartuigithub",
     "smartUI.options": {
       "output": {
